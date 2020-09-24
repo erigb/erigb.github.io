@@ -6,12 +6,6 @@ html{
   margin-right: auto; */
 }
 
-body {
-  background-image: url("images/background2.jpg");
-  background-size:cover;
-  background-attachment:fixed;
-}
-
 .top-nav{
   width: 100%;
   height: 10vh;
