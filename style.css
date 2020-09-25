@@ -69,3 +69,9 @@ li a:hover {
   width: 50rem;
   flex: 1;
 }
+
+#mppic {
+  margin-top: 75px;
+  border-radius:50%;
+  width:600px;
+}
