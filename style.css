@@ -118,3 +118,7 @@ ul.pics {
   text-align: center;
   font-size: 20px;
 }
+
+li.vert {
+  float: vertical;
+}
