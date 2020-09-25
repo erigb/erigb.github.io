@@ -97,7 +97,7 @@ li a:hover {
 table {
   border-collapse: collapse;
   width: 25%;
-  left: 33%;
+  margin-left: 33%;
 }
 
 th, td {
