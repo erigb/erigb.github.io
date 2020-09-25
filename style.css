@@ -91,3 +91,21 @@ li a:hover {
   margin-top: 200px;
   width:225px;
 }
+
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab  {
+  text-align: center;
+  font-size: 20px;
+}
