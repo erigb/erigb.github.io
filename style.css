@@ -120,16 +120,14 @@ ul.no-dot {
   float: none;
 }
 
-#p-2 {
-  margin-top: 200px;
-  margin-left: 100px;
-  width:500px;
-  height: 400px;
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
 }
 
-#p-3 {
-  margin-top: 200px;
-  margin-left: 800px;
-  width:500px;
-  height: 400px;
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
 }
