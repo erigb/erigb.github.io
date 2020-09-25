@@ -92,13 +92,6 @@ li a:hover {
   width:225px;
 }
 
-#picture {
-  width:225px;
-  height: 250px;
-}
-
-
-
 table {
   border-collapse: collapse;
   width: 25%;
@@ -119,4 +112,18 @@ th, td {
 .bootstrap li {
   font-size: 16px;
   float: none;
+}
+
+#p-2 {
+  margin-top: 200px;
+  margin-left: 100px;
+  width:500px;
+  height: 400px;
+}
+
+#p-3 {
+  margin-top: 200px;
+  margin-left: 800px;
+  width:500px;
+  height: 400px;
 }
