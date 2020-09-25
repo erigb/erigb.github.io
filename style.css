@@ -121,4 +121,5 @@ ul.pics {
 
 .bootstrap li {
   font-size: 16px;
+  float: none;
 }
