@@ -1,7 +1,7 @@
 html{
   font-size: 1.5rem;
   font-family: 'arial', sans-serif;
-  color: #fff; 
+  color: #000; 
   /* margin-left: auto;
   margin-right: auto; */
 }
@@ -62,4 +62,13 @@ li a:hover {
   font-family: 'KeeponTruckin', sans-serif;
   font-weight: 200;
   margin-top: 300px
+}
+
+.main-page-picture  {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+	top:40%;
+  	
+	margin: auto;
 }
