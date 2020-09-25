@@ -130,4 +130,5 @@ ul.no-dot {
   content: "";
   clear: both;
   display: table;
+  margin-left: 25%;
 }
