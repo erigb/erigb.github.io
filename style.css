@@ -67,12 +67,12 @@ li a:hover {
 
 .main-page-picture  {
   border-radius: 50%;
-  width: 80rem;
+  width: 78rem;
   flex: 1;
 }
 
 #mppic {
   margin-top: 200px;
   border-radius:50%;
-  width:200px;
+  width:225px;
 }
