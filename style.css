@@ -6,6 +6,14 @@ html{
   margin-right: auto; */
 }
 
+img{
+  max-width: 100%; 
+  max-height: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .top-nav{
   width: 100%;
   height: 10vh;
@@ -38,4 +46,20 @@ li a {
 
 li a:hover {
   background-color: rgb(90, 90, 90);
+}
+
+.landing-text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+}
+
+.landing-text h1{
+  font-size: 1rem;
+  font-family: 'KeeponTruckin', sans-serif;
+  font-weight: 200;
+  margin-top: 300px
 }
