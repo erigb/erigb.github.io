@@ -4,6 +4,18 @@
 window.addEventListener('load', main);
 window.addEventListener('contextmenu', event => event.preventDefault());
 
+/**
+ * Game States
+ * @enum {string}
+ */
+const GameState = {
+  LOADING: 1,
+  RUNNING: 2,
+  WIN: 3,
+  LOSE: 4
+}
+Object.freeze(GameState);
+
 const grid = document.querySelector(".grid");
 let tiles = [];
 let gameRunner = {

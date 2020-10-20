@@ -1,18 +1,6 @@
 const GRID_MAX_X = 18;
 const GRID_MAX_Y = 14;
 
-/**
- * Game States
- * @enum {string}
- */
-const GameState = {
-    LOADING: 1,
-    RUNNING: 2,
-    WIN: 3,
-    LOSE: 4
-}
-Object.freeze(GameState);
-
 
 // II. UI Helper Functions
 
