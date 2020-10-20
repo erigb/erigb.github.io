@@ -61,98 +61,28 @@ body {
   color:#242424;
 }
 
-#overlay {
+.overlayin{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  font-size: 20px;
+}
+
+#overlay{
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 999;
-  opacity: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: 0s;
-  transition: all 0s;
-
+  width: 100vw;
+  background-color:rgba(0, 0, 0, 0.7);
+  text-align: center;
+  color: white;
   visibility: hidden;
-  animation: fadeOut 0.5s;
-  animation-fill-mode: forwards;
-}
-#overlay * {
-  pointer-events: none;
 }
 
-#overlay.active {
+#overlay.active{
   visibility: visible;
-  animation: fadeIn 0.5s;
-  animation-fill-mode: forwards;
-}
-
-#overlayin {
-  padding: 1em;
-  padding-left: 4em;
-  padding-right: 4em;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: rgb(255, 255, 255);
-  box-shadow: 0 0 20px black;
-}
-
-#overlayin p {
-  text-align: center;
-  font-size: 1em;
-}
-
-p.big {
-  font-size: 2em !important;
-}
-
-p.darker {
-  color: #aaa;
-}
-
-p.glow {
-  animation: glow 1s infinite alternate-reverse;
-}
-
-@keyframes glow {
-  from { text-shadow: 0 0 20px rgb(255, 255, 0); }
-  to { text-shadow: 0 0 20px rgb(255, 115, 0); }
-}
-
-#overlay.active #overlayin {
-  opacity: 0;
-  animation: spinIn 1s ease-in-out;
-  animation-fill-mode: forwards;
-}
-
-#overlayin * {
-  margin: 0px;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes spinIn {
-  from { transform: scale(0.1) rotateX(0deg) ; opacity: 0; }
-  to { transform: scale(1) rotateX(360deg) ;  opacity: 1; }
-}
-
-.status {
-  margin-top: 5px;
-  text-align: center;
-  color: gray;
 }

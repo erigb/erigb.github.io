@@ -104,6 +104,7 @@ let MSGame = (function(){
       this.nuncovered = 0;
       this.exploded = false;
       gameRunner.UI.flag.innerText = "" + (this.nmines - this.nmarked);
+      resetTimer();
       // create an array
       this.arr = array2d(
         nrows, ncols,
@@ -190,6 +191,10 @@ let MSGame = (function(){
         this.mark(row, col)
       }
       this.getRendering();
+
+      let isDone = this.getStatus();
+      if (isDone.done)  this.endGame();
+      console.log(isDone.done);
     }
     
   
@@ -260,6 +265,7 @@ let MSGame = (function(){
         for( let col = 0 ; col < this.ncols ; col ++ ) {
           let i = (this.ncols * row) + col;
           var colour = ((Math.floor(i / this.ncols) + i) % 2 === 0) ? '#0494F5' : '#0476C2';
+          var colour2 = ((Math.floor(i / this.ncols) + i) % 2 === 0) ? '#d9b07e' : '#ca904a';
           const tile = grid.children[i];
           let a = this.arr[row][col];
           if( this.exploded && a.mine) {
@@ -280,11 +286,13 @@ let MSGame = (function(){
           }
           else if( a.mine) {
             s += "M";
+            tile.innerText = " ";
+            tile.style.backgroundColor = colour;
         }
           else {
             s += a.count.toString();
-            tile.style.backgroundColor = "#d9b07e";
-            if (a.count.toString() === 0)  {
+            tile.style.backgroundColor = colour2;
+            if (a.count.toString() === "0")  {
               tile.innerText = " ";
             }
             else  {
@@ -311,6 +319,23 @@ let MSGame = (function(){
         nuncovered: this.nuncovered,
         nmines: this.nmines
       }
+    }
+
+    endGame()  {
+      stopTimer();
+      if (this.exploded)  {
+        gameRunner.UI.overlayScreen.classList.add("active");
+        gameRunner.UI.overlayText1.innerText = "You Lost!";
+        gameRunner.UI.overlayText2.innerText = "OH NO! You hit a bomb!";
+        gameRunner.state = GameState.LOADING;
+      }
+      else {
+        gameRunner.UI.overlayScreen.classList.add("active");
+        gameRunner.UI.overlayText1.innerText = "YOU WON!";
+        gameRunner.UI.overlayText2.innerText = "Congratulations on finding all the bombs! It took you " + game.timeElapsed + " seconds!";
+        gameRunner.state = GameState.LOADING;
+      }
+      
     }
 
     resetBoard()  {
@@ -342,14 +367,23 @@ function resetTimer() {
   gameRunner.UI.timer.innerText = "0";
 }
 
+function stopTimer()  {
+  clearInterval(gameRunner.timer);
+}
+
 
 let game = new MSGame();
 function main() {
   gameRunner.UI.difficulty.addEventListener("change", () => {
     gameRunner.state = GameState.LOADING;
     game.resetBoard();
-    resetTimer();
     runGame();
   });
+
+  gameRunner.UI.overlayBtn.addEventListener("click", () => {
+    gameRunner.UI.overlayScreen.classList.remove("active");
+    game.resetBoard();
+    runGame();
+});
     runGame();
 }
