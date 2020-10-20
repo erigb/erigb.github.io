@@ -29,6 +29,5 @@ function getUIComponents() {
     GameUI.overlayBtn = document.getElementById("playagain");
     GameUI.overlayText1 = document.getElementById("overlayText1");
     GameUI.overlayText2 = document.getElementById("overlayText2");
-    GameUI.grid = document.querySelector(".grid");
     return GameUI;
 }

@@ -103,6 +103,7 @@ let MSGame = (function(){
       this.nmarked = 0;
       this.nuncovered = 0;
       this.exploded = false;
+      gameRunner.UI.flag.innerText = "" + (this.nmines - this.nmarked);
       // create an array
       this.arr = array2d(
         nrows, ncols,
@@ -116,10 +117,12 @@ let MSGame = (function(){
             tile.style.backgroundColor = colour;
             tile.className = "tile";
             grid.appendChild(tile);
-            tiles.push(tile);
             tile.addEventListener('click', () => {
-             this.tileClickEvent(grid.children[i]);
+             this.tileClickEvent(grid.children[i], true);
             });
+            tile.addEventListener('contextmenu', () => {
+              this.tileClickEvent(grid.children[i], false);
+             }); 
           }
         
 
@@ -175,12 +178,17 @@ let MSGame = (function(){
       console.log(mines.join("\n"), "\n");
     }
 
-    tileClickEvent(tile) {
+    tileClickEvent(tile, leftclick = true) {
       let i = Number(tile.id);
       console.log("Tile", i);
       let row = Math.floor(i / this.ncols);
       let col = i % this.ncols;
-      let lose = this.uncover(row, col);
+      if (leftclick)  {
+        let lose = this.uncover(row, col);
+      }
+      else  {
+        this.mark(row, col)
+      }
       this.getRendering();
     }
     
@@ -195,7 +203,7 @@ let MSGame = (function(){
       // sure the current cell does not get a mine
       if( this.nuncovered === 0)  {
         this.sprinkleMines(row, col);
-        //Start timer here?
+        startTimer();
       }
       // if cell is not hidden, ignore this move
       if( this.arr[row][col].state !== STATE_HIDDEN) return false;
@@ -221,17 +229,22 @@ let MSGame = (function(){
     // puts a flag on a cell
     // this is the 'right-click' or 'long-tap' functionality
     mark(row, col) {
-      console.log("mark", row, col);
-      // if coordinates invalid, refuse this request
-      if( ! this.validCoord(row,col)) return false;
-      // if cell already uncovered, refuse this
-      console.log("marking previous state=", this.arr[row][col].state);
-      if( this.arr[row][col].state === STATE_SHOWN) return false;
-      // accept the move and flip the marked status
-      this.nmarked += this.arr[row][col].state == STATE_MARKED ? -1 : 1;
-      this.arr[row][col].state = this.arr[row][col].state == STATE_MARKED ?
-        STATE_HIDDEN : STATE_MARKED;
-      return true;
+      if( this.nuncovered !== 0)  {
+        console.log("mark", row, col);
+        // if coordinates invalid, refuse this request
+        if( ! this.validCoord(row,col)) return false;
+        // if cell already uncovered, refuse this
+        console.log("marking previous state=", this.arr[row][col].state);
+        if( this.arr[row][col].state === STATE_SHOWN) return false;
+
+        if (this.nmines - this.nmarked < 1 && this.arr[row][col].state === STATE_HIDDEN) return false;
+        // accept the move and flip the marked status
+        this.nmarked += this.arr[row][col].state == STATE_MARKED ? -1 : 1;
+        this.arr[row][col].state = this.arr[row][col].state == STATE_MARKED ?
+          STATE_HIDDEN : STATE_MARKED;
+        return true;
+      }
+      return false;
     }
 
     // returns array of strings representing the rendering of the board
@@ -251,10 +264,8 @@ let MSGame = (function(){
           let a = this.arr[row][col];
           if( this.exploded && a.mine) {
              s += "M";
-            const createMine = new Image(game.tileDim * 0.80, game.tileDim * 0.80);
-            createMine.src = "./images/bomb.png";
-            tile.innerHTML = "";
-            tile.append(createMine);
+             tile.innerText = " ";
+             tile.style.backgroundColor = "#ee0b00";
 
           }
           else if( a.state === STATE_HIDDEN) {
@@ -264,12 +275,11 @@ let MSGame = (function(){
           }
           else if( a.state === STATE_MARKED) { 
             s += "F";
-            const createFlag = new Image(game.tileDim * 0.80, game.tileDim * 0.80);
-            createFlag.src = "./images/flag_icon.png";
-            tile.innerHTML = "";
-            tile.append(createFlag);
+            tile.innerText = " ";
+            tile.style.backgroundColor = "#010300";
           }
-          else if( a.mine) { s += "M";
+          else if( a.mine) {
+            s += "M";
         }
           else {
             s += a.count.toString();
@@ -279,12 +289,13 @@ let MSGame = (function(){
             }
             else  {
               tile.innerText = a.count.toString();
-              tile.style.fontSize = "" + game.tileDim * 0.80 + "px";
+              tile.style.fontSize = "" + this.tileDim * 0.80 + "px";
             }
           }
         }
         res[row] = s;
       }
+      gameRunner.UI.flag.innerText = "" + (this.nmines - this.nmarked);
       return res;
     }
 
@@ -301,14 +312,44 @@ let MSGame = (function(){
         nmines: this.nmines
       }
     }
+
+    resetBoard()  {
+      for (let t = this.nrows*this.ncols - 1; t >= 0; t --)  {
+        grid.removeChild(grid.children[t]);
+      }
+    }
   }
 
   return _MSGame;
 
 })();
 
+function startTimer() {
+  gameRunner.timeStart = new Date();
+  gameRunner.timer = setInterval(function () { updateTimer(); }, 500);
+}
+
+function updateTimer() {
+  let currentTime = new Date();
+  gameRunner.timeElapsed = Math.floor((currentTime - gameRunner.timeStart) / 1000);
+  document.getElementById("dash-timer").innerText = "" + gameRunner.timeElapsed;
+}
+
+function resetTimer() {
+  clearInterval(gameRunner.timer);
+  //game.timeElapsed = 0;
+  gameRunner.timeStart = 0;
+  gameRunner.UI.timer.innerText = "0";
+}
+
 
 let game = new MSGame();
 function main() {
+  gameRunner.UI.difficulty.addEventListener("change", () => {
+    gameRunner.state = GameState.LOADING;
+    game.resetBoard();
+    resetTimer();
+    runGame();
+  });
     runGame();
 }
