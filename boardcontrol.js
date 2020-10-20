@@ -1,24 +1,6 @@
 const GRID_MAX_X = 18;
 const GRID_MAX_Y = 14;
 
-
-// II. UI Helper Functions
-
-/**
- * checks to see if site is landscape or portrait(mobile)
- *
- * @returns {boolean} isLandscape - true if is landscape
- */
-function isLandscape() {
-    let html = document.querySelector("html");
-    return (html.clientHeight < html.clientWidth);
-}
-
-/**
- * Get all the UI Components in one object
- * 
- * @returns {object} object with all the UI components.
- */
 function getUIComponents() {
     GameUI = {};
     GameUI.screen = document.querySelector("html");

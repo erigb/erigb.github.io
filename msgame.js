@@ -1,5 +1,5 @@
-//This game engine was provided by Pavol Federl.
-
+//The base game engine for this js code was provided by Pavol Federl.
+//@ https://repl.it/@pfederl/Minesweeper-Game-Engine#msgame.js
 "use strict";
 window.addEventListener('load', main);
 window.addEventListener('contextmenu', event => event.preventDefault());
@@ -10,12 +10,11 @@ window.addEventListener('contextmenu', event => event.preventDefault());
  */
 const GameState = {
   LOADING: 1,
-  RUNNING: 2,
-  WIN: 3,
-  LOSE: 4
+  RUNNING: 2
 }
 Object.freeze(GameState);
 
+//Sorry about these 3 as I am still not too great with js and resorted to the globals.
 const grid = document.querySelector(".grid");
 let tiles = [];
 let gameRunner = {
@@ -23,19 +22,13 @@ let gameRunner = {
     UI: getUIComponents()
 };
 
+//This function will set up the MSGame.
 function runGame() {
     switch (gameRunner.state) {
         case GameState.LOADING:
             newGameState();
             break;
         case GameState.RUNNING:
-            runningState();
-            break;
-        case GameState.WIN:
-            endState(true);
-            break;
-        case GameState.LOSE:
-            endState(false);
             break;
     }
 }
@@ -53,14 +46,6 @@ function newGameState() {
 
     // run state machine
     runGame();
-}
-
-function runningState() {
-
-}
-
-function endState(win) {
-
 }
 
 let MSGame = (function(){
@@ -331,8 +316,8 @@ let MSGame = (function(){
       }
       else {
         gameRunner.UI.overlayScreen.classList.add("active");
-        gameRunner.UI.overlayText1.innerText = "YOU WON!";
-        gameRunner.UI.overlayText2.innerText = "Congratulations on finding all the bombs! It took you " + game.timeElapsed + " seconds!";
+        gameRunner.UI.overlayText1.innerText = "You did it!";
+        gameRunner.UI.overlayText2.innerText = "Great job on finding all the bombs! It only took you " + gameRunner.timeElapsed + " seconds!";
         gameRunner.state = GameState.LOADING;
       }
       
